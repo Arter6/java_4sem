@@ -3,25 +3,34 @@ package com.example.coursejava;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-@Entity
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity(tableName = "tasks")
 public class Task
 {
 	private String title;
 	private String desc;
+	@TypeConverters({DateTimeConverter.class})
+	private LocalDateTime date;
 	
 	@PrimaryKey(autoGenerate = true)
 	private int id;
+	
+	public void setId(int id) {this.id = id;}
 	
 	public int getId()
 	{
 		return id;
 	}
 	
-	public Task(String title, String desc)
+	public Task(String title, String desc, LocalDateTime date)
 	{
 		this.title = title;
 		this.desc = desc;
+		this.date = date;
 	}
 	
 	public String getTitle()
@@ -43,4 +52,8 @@ public class Task
 	{
 		this.desc = desc;
 	}
+	
+	public LocalDateTime getDate() {return date;}
+	
+	public void setDate(LocalDateTime date) {this.date = date;}
 }

@@ -1,4 +1,4 @@
-package com.example.coursejava;
+package com.example.coursejava.Activities;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.coursejava.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ListFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListFragment extends Fragment
+public class SettingsFragment extends Fragment
 {
 	
 	// TODO: Rename parameter arguments, choose names that match
@@ -25,7 +27,7 @@ public class ListFragment extends Fragment
 	private String mParam1;
 	private String mParam2;
 	
-	public ListFragment()
+	public SettingsFragment()
 	{
 		// Required empty public constructor
 	}
@@ -36,12 +38,12 @@ public class ListFragment extends Fragment
 	 *
 	 * @param param1 Parameter 1.
 	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment ListFragment.
+	 * @return A new instance of fragment SettingsFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static ListFragment newInstance(String param1, String param2)
+	public static SettingsFragment newInstance(String param1, String param2)
 	{
-		ListFragment fragment = new ListFragment();
+		SettingsFragment fragment = new SettingsFragment();
 		Bundle args = new Bundle();
 		args.putString(ARG_PARAM1, param1);
 		args.putString(ARG_PARAM2, param2);
@@ -65,6 +67,6 @@ public class ListFragment extends Fragment
 	                         Bundle savedInstanceState)
 	{
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_list, container, false);
+		return inflater.inflate(R.layout.fragment_settings, container, false);
 	}
 }

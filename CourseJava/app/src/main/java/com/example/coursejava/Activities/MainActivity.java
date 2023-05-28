@@ -1,28 +1,19 @@
-package com.example.coursejava;
+package com.example.coursejava.Activities;
 
 import android.os.Bundle;
 
+import com.example.coursejava.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.example.coursejava.databinding.ActivityMainBinding;
 
-import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -42,7 +33,7 @@ public class MainActivity extends AppCompatActivity
 		
 		hideSystemUI();
 		
-		bottomNavigationView = findViewById(R.id.bottom_navigation);
+		bottomNavigationView = binding.bottomNavigation;
 		bottomNavigationView.getMenu().getItem(1).setChecked(true);
 		getSupportFragmentManager().beginTransaction().replace(R.id.container,listFragment).commit();
 		

@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 public abstract class TaskDatabase extends RoomDatabase
 {
 	private static TaskDatabase instance;
+	public abstract TaskDao taskDao();
 	public static synchronized TaskDatabase getInstance(Context context)
 	{
 		if (instance == null)

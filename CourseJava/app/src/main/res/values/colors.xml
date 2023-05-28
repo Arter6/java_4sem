@@ -10,4 +10,5 @@
     <color name="yellow">#ffffff00</color>
     <color name="transparent">#00000000</color>
     <color name="bg">#BFBFBF</color>
+    <color name="cyan">#43ABFB</color>
 </resources>
