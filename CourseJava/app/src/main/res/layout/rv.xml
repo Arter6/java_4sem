@@ -3,7 +3,12 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="wrap_content"
+	android:layout_marginTop="8dp"
+	android:layout_marginBottom="8dp"
+	android:background="@drawable/task_background"
+	android:paddingRight="8dp"
+	android:paddingBottom="16dp">
 
 	<TextView
 		android:id="@+id/titleRv"
@@ -13,6 +18,7 @@
 		android:layout_marginTop="16dp"
 		android:text="title"
 		android:textSize="20sp"
+		android:textStyle="bold"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,4 +32,16 @@
 		android:textSize="20sp"
 		app:layout_constraintStart_toStartOf="@+id/titleRv"
 		app:layout_constraintTop_toBottomOf="@+id/titleRv" />
+
+	<TextView
+		android:id="@+id/dateRv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="datetime"
+		android:textSize="20sp"
+		android:textStyle="italic"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

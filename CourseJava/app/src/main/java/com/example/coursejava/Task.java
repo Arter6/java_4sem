@@ -7,6 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity(tableName = "tasks")
 public class Task
@@ -14,7 +15,10 @@ public class Task
 	private String title;
 	private String desc;
 	@TypeConverters({DateTimeConverter.class})
-	private LocalDateTime date;
+	private LocalDate date;
+	
+	@TypeConverters({DateTimeConverter.class})
+	private LocalTime time;
 	
 	@PrimaryKey(autoGenerate = true)
 	private int id;
@@ -26,11 +30,14 @@ public class Task
 		return id;
 	}
 	
-	public Task(String title, String desc, LocalDateTime date)
+	
+	
+	public Task(String title, String desc, LocalDate date, LocalTime time)
 	{
 		this.title = title;
 		this.desc = desc;
 		this.date = date;
+		this.time = time;
 	}
 	
 	public String getTitle()
@@ -53,7 +60,17 @@ public class Task
 		this.desc = desc;
 	}
 	
-	public LocalDateTime getDate() {return date;}
+	public LocalDate getDate() {return date;}
 	
-	public void setDate(LocalDateTime date) {this.date = date;}
+	public void setDate(LocalDate date) {this.date = date;}
+	
+	public LocalTime getTime()
+	{
+		return time;
+	}
+	
+	public void setTime(LocalTime time)
+	{
+		this.time = time;
+	}
 }

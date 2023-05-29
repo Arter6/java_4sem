@@ -13,6 +13,12 @@
 		android:theme="@style/Theme.CourseJava"
 		tools:targetApi="31">
 		<activity
+			android:name=".Activities.SettingsActivity"
+			android:exported="false" />
+		<activity
+			android:name=".Activities.StatisticsActivity"
+			android:exported="false" />
+		<activity
 			android:name=".Activities.TaskInsertActivity"
 			android:exported="false" />
 		<activity
