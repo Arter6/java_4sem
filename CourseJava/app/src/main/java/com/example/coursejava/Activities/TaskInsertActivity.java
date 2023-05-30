@@ -1,12 +1,14 @@
 package com.example.coursejava.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static com.example.coursejava.Activities.MainActivity.showSystemUI;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.coursejava.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.coursejava.Tasks.Task;
 import com.example.coursejava.databinding.ActivityTaskInsertBinding;
 
 public class TaskInsertActivity extends AppCompatActivity
@@ -18,6 +20,17 @@ public class TaskInsertActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		binding = ActivityTaskInsertBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+		
+//		showSystemUI(this);
+		
+		binding.backButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				startActivity(new Intent(TaskInsertActivity.this,MainActivity.class));
+			}
+		});
 		
 		String type = getIntent().getStringExtra("type");
 		if (type.equals("update"))

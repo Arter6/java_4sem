@@ -2,16 +2,15 @@ package com.example.coursejava.Activities;
 
 import static com.example.coursejava.Activities.MainActivity.hideSystemUI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.coursejava.R;
 import com.example.coursejava.databinding.ActivitySettingsBinding;
-import com.example.coursejava.databinding.ActivityStatisticsBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

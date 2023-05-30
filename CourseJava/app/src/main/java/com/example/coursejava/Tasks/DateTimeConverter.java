@@ -1,4 +1,4 @@
-package com.example.coursejava;
+package com.example.coursejava.Tasks;
 
 import androidx.room.TypeConverter;
 
@@ -6,13 +6,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 public class DateTimeConverter
 {
 	public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	public static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+	public static DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 	@TypeConverter
 	public static LocalDate toDate(String dateString)
 	{
@@ -62,6 +61,32 @@ public class DateTimeConverter
 		else
 		{
 			return time.format(timeFormatter);
+		}
+	}
+	
+	@TypeConverter
+	public static LocalDateTime toDateTime(String dateTimeString)
+	{
+		if (dateTimeString == null)
+		{
+			return null;
+		}
+		else
+		{
+			return LocalDateTime.parse(dateTimeString,datetimeFormatter);
+		}
+	}
+	
+	@TypeConverter
+	public static String toDateTimeString(LocalDateTime dateTime)
+	{
+		if (dateTime == null)
+		{
+			return null;
+		}
+		else
+		{
+			return dateTime.format(datetimeFormatter);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.example.coursejava;
+package com.example.coursejava.Tasks;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

@@ -2,15 +2,15 @@ package com.example.coursejava.Activities;
 
 import static com.example.coursejava.Activities.MainActivity.hideSystemUI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.coursejava.R;
-import com.example.coursejava.databinding.ActivityMainBinding;
+import com.example.coursejava.Stats.StatViewModel;
 import com.example.coursejava.databinding.ActivityStatisticsBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -19,6 +19,7 @@ public class StatisticsActivity extends AppCompatActivity
 {
 	ActivityStatisticsBinding binding;
 	BottomNavigationView bottomNavigationView;
+	StatViewModel statViewModel;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

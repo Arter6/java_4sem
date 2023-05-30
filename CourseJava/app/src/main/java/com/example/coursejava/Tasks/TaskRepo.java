@@ -1,4 +1,4 @@
-package com.example.coursejava;
+package com.example.coursejava.Tasks;
 
 import android.app.Application;
 import android.os.AsyncTask;

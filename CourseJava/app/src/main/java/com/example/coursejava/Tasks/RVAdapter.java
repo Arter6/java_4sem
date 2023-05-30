@@ -1,7 +1,7 @@
-package com.example.coursejava;
+package com.example.coursejava.Tasks;
 
-import static com.example.coursejava.DateTimeConverter.dateFormatter;
-import static com.example.coursejava.DateTimeConverter.timeFormatter;
+import static com.example.coursejava.Tasks.DateTimeConverter.dateFormatter;
+import static com.example.coursejava.Tasks.DateTimeConverter.timeFormatter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coursejava.R;
 import com.example.coursejava.databinding.RvBinding;
 
 public class RVAdapter extends ListAdapter<Task,RVAdapter.ViewHolder>

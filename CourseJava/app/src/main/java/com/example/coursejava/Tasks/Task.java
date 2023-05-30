@@ -1,4 +1,4 @@
-package com.example.coursejava;
+package com.example.coursejava.Tasks;
 
 
 import androidx.room.Entity;
@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity(tableName = "tasks")
@@ -69,8 +68,5 @@ public class Task
 		return time;
 	}
 	
-	public void setTime(LocalTime time)
-	{
-		this.time = time;
-	}
+	public void setTime(LocalTime time) {this.time = time;}
 }

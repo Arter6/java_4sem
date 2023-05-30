@@ -1,20 +1,17 @@
 package com.example.coursejava.Activities;
 
-//import static com.example.coursejava.DateTimeConverter.formatter;
+//import static com.example.coursejava.Tasks.DateTimeConverter.formatter;
 
-import static com.example.coursejava.DateTimeConverter.dateFormatter;
-import static com.example.coursejava.DateTimeConverter.timeFormatter;
+import static com.example.coursejava.Tasks.DateTimeConverter.dateFormatter;
+import static com.example.coursejava.Tasks.DateTimeConverter.timeFormatter;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.coursejava.R;
-import com.example.coursejava.RVAdapter;
-import com.example.coursejava.Task;
-import com.example.coursejava.TaskViewModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,23 +19,22 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-
+import com.example.coursejava.R;
+import com.example.coursejava.Tasks.RVAdapter;
+import com.example.coursejava.Tasks.Task;
+import com.example.coursejava.Tasks.TaskViewModel;
 import com.example.coursejava.databinding.ActivityMainBinding;
-
-import android.view.MenuItem;
-import android.widget.Toast;
+import com.example.coursejava.databinding.ActivityTaskInsertBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -49,11 +45,15 @@ public class MainActivity extends AppCompatActivity
 	BottomNavigationView bottomNavigationView;
 	TaskViewModel taskViewModel;
 	ActivityResultLauncher activityResultLauncher;
+	int backButtonCount;
+	Toast backPressed;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		backButtonCount = 0;
+		backPressed = Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT);
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 		
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity
 				if (direction == ItemTouchHelper.RIGHT)
 				{
 					taskViewModel.delete(rvAdapter.getTask(viewHolder.getAdapterPosition()));
+					Toast.makeText(MainActivity.this,"Task deleted",Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -190,10 +191,40 @@ public class MainActivity extends AppCompatActivity
 		decorView.setSystemUiVisibility(newUiOptions);
 	}
 	
+	public static void showSystemUI(Activity activity) {
+		View decorView = activity.getWindow().getDecorView();
+		int uiOptions = decorView.getSystemUiVisibility();
+		int newUiOptions = uiOptions;
+		newUiOptions &= ~View.SYSTEM_UI_FLAG_LOW_PROFILE;
+		newUiOptions &= ~View.SYSTEM_UI_FLAG_FULLSCREEN;
+		newUiOptions &= ~View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+		newUiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE;
+		newUiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+		decorView.setSystemUiVisibility(newUiOptions);
+	}
+	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
 		hideSystemUI(this);
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(backButtonCount >= 1)
+		{
+			backPressed.cancel();
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+		}
+		else
+		{
+			backPressed.show();
+			backButtonCount++;
+		}
 	}
 }
