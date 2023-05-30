@@ -18,6 +18,7 @@ public abstract class StatDatabase extends RoomDatabase
 		{
 			instance = Room.databaseBuilder(context.getApplicationContext()
 					,StatDatabase.class,"stat_database").fallbackToDestructiveMigration()
+					.allowMainThreadQueries()
 					.build();
 		}
 		return instance;

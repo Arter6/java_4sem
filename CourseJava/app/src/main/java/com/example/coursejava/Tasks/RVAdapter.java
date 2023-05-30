@@ -1,6 +1,7 @@
 package com.example.coursejava.Tasks;
 
 import static com.example.coursejava.Tasks.DateTimeConverter.dateFormatter;
+import static com.example.coursejava.Tasks.DateTimeConverter.datetimeFormatter;
 import static com.example.coursejava.Tasks.DateTimeConverter.timeFormatter;
 
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class RVAdapter extends ListAdapter<Task,RVAdapter.ViewHolder>
 		Task task =getItem(position);
 		holder.binding.titleRv.setText(task.getTitle());
 		holder.binding.descRv.setText(task.getDesc());
-		holder.binding.dateRv.setText(task.getDate().format(dateFormatter) + " "+ task.getTime().format(timeFormatter));
+		holder.binding.dateRv.setText(task.getDate().format(datetimeFormatter));
 	}
 	
 	public Task getTask(int position)

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.coursejava.R;
 import com.example.coursejava.Stats.StatViewModel;
@@ -59,5 +60,7 @@ public class StatisticsActivity extends AppCompatActivity
 				return false;
 			}
 		});
+		
+		statViewModel = new ViewModelProvider(this,(ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(StatViewModel.class);
 	}
 }

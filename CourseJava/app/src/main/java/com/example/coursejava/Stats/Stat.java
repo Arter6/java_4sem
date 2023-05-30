@@ -15,7 +15,7 @@ public class Stat
 	private LocalDateTime start;
 	@TypeConverters({DateTimeConverter.class})
 	private LocalDateTime end;
-	@PrimaryKey(autoGenerate = true)
+	@PrimaryKey(autoGenerate = false)
 	private int id;
 	
 	public Stat(LocalDateTime start)
