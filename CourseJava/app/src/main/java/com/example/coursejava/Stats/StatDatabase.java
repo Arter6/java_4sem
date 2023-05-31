@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = Stat.class, version = 1)
+@Database(entities = Stat.class, version = 3)
 public abstract class StatDatabase extends RoomDatabase
 {
 	private static StatDatabase instance;
@@ -18,6 +18,7 @@ public abstract class StatDatabase extends RoomDatabase
 		{
 			instance = Room.databaseBuilder(context.getApplicationContext()
 					,StatDatabase.class,"stat_database").fallbackToDestructiveMigration()
+					.allowMainThreadQueries()
 					.build();
 		}
 		return instance;

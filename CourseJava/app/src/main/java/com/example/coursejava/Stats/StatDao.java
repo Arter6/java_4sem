@@ -23,4 +23,13 @@ public interface StatDao
 	
 	@Query("SELECT * FROM stats")
 	public LiveData<List<Stat>> getAllData();
+	
+	@Query("SELECT * FROM stats WHERE id = :id")
+	public Stat getById(int id);
+	
+	@Query("SELECT * FROM stats")
+	public List<Stat> getListData();
+	
+	@Query("DELETE FROM stats")
+	public void clearStatDatabase();
 }

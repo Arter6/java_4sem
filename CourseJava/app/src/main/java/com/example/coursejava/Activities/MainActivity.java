@@ -26,8 +26,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursejava.R;
+import com.example.coursejava.Stats.Stat;
+import com.example.coursejava.Stats.StatDao;
+import com.example.coursejava.Stats.StatDatabase;
+import com.example.coursejava.Stats.StatViewModel;
 import com.example.coursejava.Tasks.RVAdapter;
 import com.example.coursejava.Tasks.Task;
+import com.example.coursejava.Tasks.TaskDao;
+import com.example.coursejava.Tasks.TaskDatabase;
 import com.example.coursejava.Tasks.TaskViewModel;
 import com.example.coursejava.databinding.ActivityMainBinding;
 import com.example.coursejava.databinding.ActivityTaskInsertBinding;
@@ -35,6 +41,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity
 	ActivityMainBinding binding;
 	BottomNavigationView bottomNavigationView;
 	TaskViewModel taskViewModel;
+	StatViewModel statViewModel;
 	ActivityResultLauncher activityResultLauncher;
 	int backButtonCount;
 	Toast backPressed;
@@ -88,6 +96,7 @@ public class MainActivity extends AppCompatActivity
 		});
 		
 		taskViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(TaskViewModel.class);
+		statViewModel = new ViewModelProvider(this,(ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(StatViewModel.class);
 		
 		activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>()
 		{
@@ -102,8 +111,13 @@ public class MainActivity extends AppCompatActivity
 					String time = result.getData().getStringExtra("time");
 					LocalDate localDate = LocalDate.parse(date,dateFormatter);
 					LocalTime localTime = LocalTime.parse(time,timeFormatter);
-					Task task = new Task(title, desc, localDate, localTime);
-					taskViewModel.insert(task);
+					LocalDateTime localDateTime = localDate.atTime(localTime);
+					Task task = new Task(title, desc, localDateTime);
+//					taskViewModel.insert(task);
+					long taskId = TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
+					Stat stat = new Stat(localDateTime);
+					stat.setId((int)taskId);
+					statViewModel.insert(stat);
 					Toast.makeText(MainActivity.this,"task added", Toast.LENGTH_SHORT).show();
 				}
 				else if (result.getResultCode() == 2)
@@ -114,9 +128,13 @@ public class MainActivity extends AppCompatActivity
 					String time = result.getData().getStringExtra("time");
 					LocalDate localDate = LocalDate.parse(date,dateFormatter);
 					LocalTime localTime = LocalTime.parse(time,timeFormatter);
-					Task task = new Task(title, desc, localDate, localTime);
+					LocalDateTime localDateTime = localDate.atTime(localTime);
+					Task task = new Task(title, desc, localDateTime);
 					task.setId(result.getData().getIntExtra("id",0));
 					taskViewModel.update(task);
+					Stat stat = new Stat(localDateTime);
+					stat.setId(task.getId());
+					statViewModel.update(stat);
 					Toast.makeText(MainActivity.this,"task updated", Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -161,7 +179,11 @@ public class MainActivity extends AppCompatActivity
 			{
 				if (direction == ItemTouchHelper.RIGHT)
 				{
-					taskViewModel.delete(rvAdapter.getTask(viewHolder.getAdapterPosition()));
+					Task task = rvAdapter.getTask(viewHolder.getAdapterPosition());
+					Stat stat = StatDatabase.getInstance(getApplicationContext()).statDao().getById(task.getId());
+					stat.setEnd(LocalDateTime.now());
+					taskViewModel.delete(task);
+					statViewModel.update(stat);
 					Toast.makeText(MainActivity.this,"Task deleted",Toast.LENGTH_SHORT).show();
 				}
 				else
@@ -171,12 +193,14 @@ public class MainActivity extends AppCompatActivity
 					intent.putExtra("title",rvAdapter.getTask(viewHolder.getAdapterPosition()).getTitle());
 					intent.putExtra("desc",rvAdapter.getTask(viewHolder.getAdapterPosition()).getDesc());
 					intent.putExtra("date",rvAdapter.getTask(viewHolder.getAdapterPosition()).getDate().format(dateFormatter));
-					intent.putExtra("time",rvAdapter.getTask(viewHolder.getAdapterPosition()).getTime().format(timeFormatter));
+					intent.putExtra("time",rvAdapter.getTask(viewHolder.getAdapterPosition()).getDate().format(timeFormatter));
 					intent.putExtra("id",rvAdapter.getTask(viewHolder.getAdapterPosition()).getId());
 					activityResultLauncher.launch(intent);
 				}
 			}
 		}).attachToRecyclerView(binding.recyclerView);
+		
+
 	}
 	
 	public static void hideSystemUI(Activity activity) {
