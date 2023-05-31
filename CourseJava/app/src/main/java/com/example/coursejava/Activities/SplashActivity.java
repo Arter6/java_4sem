@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.coursejava.R;
 
@@ -16,6 +17,7 @@ public class SplashActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 		setContentView(R.layout.activity_splash);
 		hideSystemUI();
 		Handler handler = new Handler();

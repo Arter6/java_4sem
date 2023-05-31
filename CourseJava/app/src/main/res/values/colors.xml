@@ -9,6 +9,7 @@
     <color name="red">#ffff0000</color>
     <color name="yellow">#ffffff00</color>
     <color name="transparent">#00000000</color>
-    <color name="bg">#BFBFBF</color>
+<!--    <color name="bg">#BFBFBF</color>-->
+    <color name="bg">#ECE6E6</color>
     <color name="cyan">#43ABFB</color>
 </resources>

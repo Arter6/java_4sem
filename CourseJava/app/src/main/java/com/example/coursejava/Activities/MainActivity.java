@@ -32,6 +32,8 @@ import com.example.coursejava.Stats.StatDatabase;
 import com.example.coursejava.Stats.StatViewModel;
 import com.example.coursejava.Tasks.RVAdapter;
 import com.example.coursejava.Tasks.Task;
+import com.example.coursejava.Tasks.TaskDao;
+import com.example.coursejava.Tasks.TaskDatabase;
 import com.example.coursejava.Tasks.TaskViewModel;
 import com.example.coursejava.databinding.ActivityMainBinding;
 import com.example.coursejava.databinding.ActivityTaskInsertBinding;
@@ -111,9 +113,10 @@ public class MainActivity extends AppCompatActivity
 					LocalTime localTime = LocalTime.parse(time,timeFormatter);
 					LocalDateTime localDateTime = localDate.atTime(localTime);
 					Task task = new Task(title, desc, localDateTime);
-					taskViewModel.insert(task);
+//					taskViewModel.insert(task);
+					long taskId = TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
 					Stat stat = new Stat(localDateTime);
-					stat.setId(task.getId());
+					stat.setId((int)taskId);
 					statViewModel.insert(stat);
 					Toast.makeText(MainActivity.this,"task added", Toast.LENGTH_SHORT).show();
 				}
