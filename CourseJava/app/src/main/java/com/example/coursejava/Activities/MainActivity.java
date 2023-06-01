@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity
 					LocalDateTime localDateTime = localDate.atTime(localTime);
 					Task task = new Task(title, desc, localDateTime);
 //					taskViewModel.insert(task);
-					long taskId = TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
+					int id = (int) TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
 					Stat stat = new Stat(localDateTime);
-					stat.setId((int)taskId);
+					stat.setId(id);
 					statViewModel.insert(stat);
 					Toast.makeText(MainActivity.this,"task added", Toast.LENGTH_SHORT).show();
 				}
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
 				{
 					Task task = rvAdapter.getTask(viewHolder.getAdapterPosition());
 					Stat stat = StatDatabase.getInstance(getApplicationContext()).statDao().getById(task.getId());
-					stat.setEnd(LocalDateTime.now());
+					stat.setEnd(LocalDateTime.now().plusHours(3));
 					taskViewModel.delete(task);
 					statViewModel.update(stat);
 					Toast.makeText(MainActivity.this,"Task deleted",Toast.LENGTH_SHORT).show();

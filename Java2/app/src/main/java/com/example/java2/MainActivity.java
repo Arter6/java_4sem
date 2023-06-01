@@ -1,53 +1,50 @@
 package com.example.java2;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-
-import androidx.navigation.ui.AppBarConfiguration;
-
-import com.example.java2.databinding.ActivityMainBinding;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
 {
-	
-	private AppBarConfiguration appBarConfiguration;
-	private ActivityMainBinding binding;
-	
-	FirstFragment firstFragment = new FirstFragment();
-	SecondFragment secondFragment = new SecondFragment();
-	ThirdFragment thirdFragment = new ThirdFragment();
+
+	public void onButtonClickDecl (View view)
+	{
+		Log.d("RRR","declarative");
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.constraint_layout);
+		TextView textView=findViewById(R.id.textView3);
+		Button button = findViewById(R.id.button3);
+		EditText editText = findViewById(R.id.editTextText3);
+		ImageView imageView = findViewById(R.id.imageView3);
+		textView.setText("Java_3");
+		imageView.setImageResource(R.drawable.splash_icon);
+		button.setText("Нажми на меня");
 		
-		binding = ActivityMainBinding.inflate(getLayoutInflater());
-		setContentView(binding.getRoot());
+		button.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				Log.d("RRR","program");
+			}
+		});
 		
-		getSupportFragmentManager().beginTransaction().replace(R.id.container,firstFragment).commit();
-		
-		findViewById(R.id.button1).setOnClickListener(this::onClick);
-		findViewById(R.id.button2).setOnClickListener(this::onClick);
-		findViewById(R.id.button3).setOnClickListener(this::onClick);
-	}
-	
-	public void onClick(View view)
-	{
-		if (view == findViewById(R.id.button1))
-		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.container,firstFragment).commit();
-		}
-		else if (view == findViewById(R.id.button2))
-		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.container,secondFragment).commit();
-		}
-		else if (view == findViewById(R.id.button3))
-		{
-			getSupportFragmentManager().beginTransaction().replace(R.id.container,thirdFragment).commit();
-		}
+		Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+		intent.putExtra("value","xxx");
+		startActivity(intent);
 	}
 }

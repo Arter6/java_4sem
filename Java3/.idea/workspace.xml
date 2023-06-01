@@ -9,22 +9,69 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04c0070-4dd2-4dbc-91a2-bd4239ca615c" name="Changes" comment="" />
+    <list default="true" id="919a30a8-36ec-403a-a89f-96feae918dc4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/SecondActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/drawable/baseline_access_time_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/drawable/dzerzh1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/activity_second.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/constraint_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/linear_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/relative_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Contraint_2111" beforeDir="false" afterPath="$PROJECT_DIR$/../Contraint_2111" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java1/app/src/main/java/com/example/java1/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java1/app/src/main/java/com/example/java1/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java1/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Java1/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/FirstFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/SecondFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/java/com/example/java2/ThirdFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/content_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/fragment_first.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/fragment_second.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/layout/fragment_third.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/menu/menu_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values-land/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values-v23/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values-w1240dp/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values-w600dp/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java2/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Java2/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaTest2" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaTest2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MFragments" beforeDir="false" afterPath="$PROJECT_DIR$/../MFragments" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../todo-list" beforeDir="false" afterPath="$PROJECT_DIR$/../todo-list" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Artem\.android\avd\Pixel_XL_API_24.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[b8cd83d1]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2Q7gVehZKapDwlR3MvqsfhqtGy6" />
+  <component name="ProjectId" id="2Qa1CuXxK11SU3lpWfEaQI7lEeP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,15 +82,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/Users/Artem/Desktop/Android_Java/Java2",
+    "last_opened_file_path": "C:/Users/Artem/Desktop/Android_Java/Java4",
     "project.structure.last.edited": "SDK Location",
     "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="android.template.573858139">
-      <recent name="com.example.java3" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Artem\Desktop\Android_Java\Java3\app\src\main\res\layout" />
     </key>
   </component>
   <component name="RunManager">
@@ -109,12 +157,23 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f04c0070-4dd2-4dbc-91a2-bd4239ca615c" name="Changes" comment="" />
-      <created>1684710058847</created>
+      <changelist id="919a30a8-36ec-403a-a89f-96feae918dc4" name="Changes" comment="" />
+      <created>1685576754434</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1684710058847</updated>
+      <updated>1685576754434</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
