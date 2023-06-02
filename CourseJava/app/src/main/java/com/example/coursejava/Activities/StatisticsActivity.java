@@ -5,7 +5,6 @@ import static com.example.coursejava.Activities.MainActivity.hideSystemUI;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coursejava.BarChartXAxisValueFormatter;
+import com.example.coursejava.Stats.BarChartXAxisValueFormatter;
 import com.example.coursejava.R;
 import com.example.coursejava.Stats.Stat;
 import com.example.coursejava.Stats.StatDatabase;
@@ -27,17 +26,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class StatisticsActivity extends AppCompatActivity

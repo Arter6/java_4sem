@@ -1,12 +1,20 @@
 package com.example.coursejava.Activities;
 
-//import static com.example.coursejava.Tasks.DateTimeConverter.formatter;
-
 import static com.example.coursejava.Tasks.DateTimeConverter.dateFormatter;
 import static com.example.coursejava.Tasks.DateTimeConverter.timeFormatter;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +27,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -31,6 +42,7 @@ import com.example.coursejava.Stats.StatDao;
 import com.example.coursejava.Stats.StatDatabase;
 import com.example.coursejava.Stats.StatViewModel;
 import com.example.coursejava.Tasks.RVAdapter;
+import com.example.coursejava.Tasks.ReminderBroadcast;
 import com.example.coursejava.Tasks.Task;
 import com.example.coursejava.Tasks.TaskDao;
 import com.example.coursejava.Tasks.TaskDatabase;
@@ -43,11 +55,18 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formattable;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
 {
-	
+	ActivityResultLauncher<String[]> mPermissionResultLauncher;
+	private boolean isPostNotificationGranted = false;
 	ActivityMainBinding binding;
 	BottomNavigationView bottomNavigationView;
 	TaskViewModel taskViewModel;
@@ -60,6 +79,21 @@ public class MainActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		mPermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>()
+		{
+			@Override
+			public void onActivityResult(Map<String, Boolean> result)
+			{
+				if (result.get(Manifest.permission.POST_NOTIFICATIONS) != null)
+				{
+					isPostNotificationGranted = result.get(Manifest.permission.POST_NOTIFICATIONS);
+				}
+			}
+		});
+		
+		requestPermission();
+		
 		backButtonCount = 0;
 		backPressed = Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT);
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -118,6 +152,18 @@ public class MainActivity extends AppCompatActivity
 					Stat stat = new Stat(localDateTime);
 					stat.setId((int)taskId);
 					statViewModel.insert(stat);
+					
+					createNotificationChannel(task);
+					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+					intent.putExtra("id",id);
+					intent.putExtra("title",task.getTitle());
+					intent.putExtra("desc",task.getDesc());
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+					
+					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+					long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
+					alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					
 					Toast.makeText(MainActivity.this,"task added", Toast.LENGTH_SHORT).show();
 				}
 				else if (result.getResultCode() == 2)
@@ -135,6 +181,18 @@ public class MainActivity extends AppCompatActivity
 					Stat stat = new Stat(localDateTime);
 					stat.setId(task.getId());
 					statViewModel.update(stat);
+					
+					createNotificationChannel(task);
+					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+					intent.putExtra("id",task.getId());
+					intent.putExtra("title",task.getTitle());
+					intent.putExtra("desc",task.getDesc());
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+					
+					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+					long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
+					alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					
 					Toast.makeText(MainActivity.this,"task updated", Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -182,6 +240,11 @@ public class MainActivity extends AppCompatActivity
 					Task task = rvAdapter.getTask(viewHolder.getAdapterPosition());
 					Stat stat = StatDatabase.getInstance(getApplicationContext()).statDao().getById(task.getId());
 					stat.setEnd(LocalDateTime.now());
+<<<<<<< Updated upstream
+=======
+//					Toast.makeText(getApplicationContext(),task.getDate().toString(), Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(),LocalDateTime.now().toString(), Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes
 					taskViewModel.delete(task);
 					statViewModel.update(stat);
 					Toast.makeText(MainActivity.this,"Task deleted",Toast.LENGTH_SHORT).show();
@@ -200,7 +263,74 @@ public class MainActivity extends AppCompatActivity
 			}
 		}).attachToRecyclerView(binding.recyclerView);
 		
-
+		
+	}
+	
+	public void requestPermission()
+	{
+		isPostNotificationGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+		
+		List<String> permissionRequest = new ArrayList<String>();
+		
+		if (!isPostNotificationGranted)
+		{
+			permissionRequest.add(Manifest.permission.POST_NOTIFICATIONS);
+		}
+		
+		if (!permissionRequest.isEmpty())
+		{
+			mPermissionResultLauncher.launch(permissionRequest.toArray(new String[0]));
+		}
+	}
+	
+//	public void createNotification(Task task)
+//	{
+//		Integer id = task.getId();
+//		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+//		{
+//			NotificationChannel channel = manager.getNotificationChannel(id.toString());
+//			channel = new NotificationChannel(id.toString(),"CN",NotificationManager.IMPORTANCE_HIGH);
+//			channel.setDescription("CD");
+//			channel.enableVibration(true);
+//			channel.setVibrationPattern(new long[]{100,1000,200,340});
+//			channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+//			manager.createNotificationChannel(channel);
+//		}
+//		Intent notificationIntent = new Intent(this, NotificationActivity.class);
+//		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
+//		NotificationCompat.Builder builder = new NotificationCompat.Builder(this,id.toString())
+//				.setSmallIcon(R.drawable.logo)
+//				.setContentTitle(task.getTitle())
+//				.setContentText(task.getDesc())
+//				.setPriority(NotificationCompat.PRIORITY_HIGH)
+//				.setVibrate(new long[]{100,1000,200,340})
+//				.setAutoCancel(false)
+//				.setTicker("Notification");
+//		builder.setContentIntent(contentIntent);
+//		NotificationManagerCompat m = NotificationManagerCompat.from(getApplicationContext());
+//		m.notify(id,builder.build());
+//
+//	}
+	
+	private void createNotificationChannel(Task task)
+	{
+		Integer id = task.getId();
+		Log.d("createNotificationChannel",id.toString());
+		String title = task.getTitle();
+		String desc = task.getDesc();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+		{
+			String name = "TaskChannelName";
+			String description = "TaskChannelDescription";
+			int importance = NotificationManager.IMPORTANCE_HIGH;
+			NotificationChannel channel = new NotificationChannel(id.toString(),name,importance);
+			channel.setDescription(description);
+			
+			NotificationManager notificationManager = getSystemService(NotificationManager.class);
+			notificationManager.createNotificationChannel(channel);
+		}
 	}
 	
 	public static void hideSystemUI(Activity activity) {
