@@ -4,6 +4,7 @@ import static com.example.coursejava.Activities.MainActivity.showSystemUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +15,8 @@ import com.example.coursejava.databinding.ActivityTaskInsertBinding;
 
 public class TaskInsertActivity extends AppCompatActivity
 {
+	String regexDate = "^(?:(?:31(\\/|-|\\.)(?:0[13578]|1[02]))\\1|(?:(?:29|30)(\\.)(?:0[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)\\d{2})$|^(?:29(\\.)02\\3(?:(?:(?:1[6-9]|[2-9]\\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0[1-9]|1\\d|2[0-8])(\\.)(?:(?:0[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)\\d{2})$";
+	String regexTime = "^([0-1][0-9]|2[0-3]):[0-5][0-9]$";
 	ActivityTaskInsertBinding binding;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -52,8 +55,8 @@ public class TaskInsertActivity extends AppCompatActivity
 				@Override
 				public void onClick(View view)
 				{
-					if (binding.taskDate.getText().toString().matches("^(?:(?:31(\\/|-|\\.)(?:0[13578]|1[02]))\\1|(?:(?:29|30)(\\.)(?:0[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)\\d{2})$|^(?:29(\\.)02\\3(?:(?:(?:1[6-9]|[2-9]\\d)(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0[1-9]|1\\d|2[0-8])(\\.)(?:(?:0[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)\\d{2})$")
-						&& binding.taskTime.getText().toString().matches("^([0-1][0-9]|2[0-3]):[0-5][0-9]$"))
+					if (binding.taskDate.getText().toString().matches(regexDate)
+						&& binding.taskTime.getText().toString().matches(regexTime))
 					{
 						Intent intent = new Intent();
 						intent.putExtra("title", binding.addTaskTitle.getText().toString());
@@ -79,13 +82,21 @@ public class TaskInsertActivity extends AppCompatActivity
 				@Override
 				public void onClick(View v)
 				{
-					Intent intent = new Intent();
-					intent.putExtra("title", binding.addTaskTitle.getText().toString());
-					intent.putExtra("desc", binding.addTaskDescription.getText().toString());
-					intent.putExtra("date", binding.taskDate.getText().toString());
-					intent.putExtra("time", binding.taskTime.getText().toString());
-					setResult(1, intent);
-					finish();
+					if (binding.taskDate.getText().toString().matches(regexDate)
+							&& binding.taskTime.getText().toString().matches(regexTime))
+					{
+						Intent intent = new Intent();
+						intent.putExtra("title", binding.addTaskTitle.getText().toString());
+						intent.putExtra("desc", binding.addTaskDescription.getText().toString());
+						intent.putExtra("date", binding.taskDate.getText().toString());
+						intent.putExtra("time", binding.taskTime.getText().toString());
+						setResult(1, intent);
+						finish();
+					}
+					else
+					{
+						Toast.makeText(TaskInsertActivity.this,"Wrong date or time format",Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
 		}
