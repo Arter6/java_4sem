@@ -35,7 +35,8 @@ public class RVAdapter extends ListAdapter<Task,RVAdapter.ViewHolder>
 		@Override
 		public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem)
 		{
-			return oldItem.getTitle().equals(newItem.getTitle())
+			return oldItem.getId() != newItem.getId()
+					&& oldItem.getTitle().equals(newItem.getTitle())
 					&& oldItem.getDesc().equals(newItem.getDesc())
 					&& oldItem.getDate().equals(newItem.getDate());
 		}

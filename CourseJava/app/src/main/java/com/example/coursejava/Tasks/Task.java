@@ -27,8 +27,6 @@ public class Task
 		return id;
 	}
 	
-	
-	
 	public Task(String title, String desc, LocalDateTime date)
 	{
 		this.title = title;

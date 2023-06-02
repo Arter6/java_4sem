@@ -27,9 +27,6 @@ public interface TaskDao
 	@Query("SELECT * FROM tasks")
 	public LiveData<List<Task>> getAllData();
 	
-	@Query("SELECT * FROM tasks")
-	public  List<Task> getListData();
-	
 	@Query("DELETE FROM tasks")
 	public void clearTaskDatabase();
 }

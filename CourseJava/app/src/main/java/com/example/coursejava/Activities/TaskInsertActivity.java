@@ -36,10 +36,14 @@ public class TaskInsertActivity extends AppCompatActivity
 		if (type.equals("update"))
 		{
 			setTitle("update");
-			binding.addTaskTitle.setText(getIntent().getStringExtra("title"));
-			binding.addTaskDescription.setText(getIntent().getStringExtra("desc"));
-			binding.taskDate.setText(getIntent().getStringExtra("date"));
-			binding.taskTime.setText(getIntent().getStringExtra("time"));
+			String text = getIntent().getStringExtra("title");
+			String desc = getIntent().getStringExtra("desc");
+			String date = getIntent().getStringExtra("date");
+			String time = getIntent().getStringExtra("time");
+			binding.addTaskTitle.setText(text);
+			binding.addTaskDescription.setText(desc);
+			binding.taskDate.setText(date);
+			binding.taskTime.setText(time);
 			int id = getIntent().getIntExtra("id",0);
 			binding.addTask.setText("Update task");
 			binding.addTask.setOnClickListener(new View.OnClickListener()

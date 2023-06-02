@@ -65,6 +65,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
 {
+	AlarmManager alarmManager;
+	NotificationManager notificationManager;
 	ActivityResultLauncher<String[]> mPermissionResultLauncher;
 	private boolean isPostNotificationGranted = false;
 	ActivityMainBinding binding;
@@ -79,6 +81,10 @@ public class MainActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		createNotificationChannel();
+		
+		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		
 		mPermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>()
 		{
@@ -103,7 +109,6 @@ public class MainActivity extends AppCompatActivity
 		
 		bottomNavigationView = binding.bottomNavigation;
 		bottomNavigationView.setSelectedItemId(R.id.list);
-//		bottomNavigationView.getMenu().getItem(1).setChecked(true);
 		
 		bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
 		{
@@ -147,22 +152,22 @@ public class MainActivity extends AppCompatActivity
 					LocalTime localTime = LocalTime.parse(time,timeFormatter);
 					LocalDateTime localDateTime = localDate.atTime(localTime);
 					Task task = new Task(title, desc, localDateTime);
-//					taskViewModel.insert(task);
-					long taskId = TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
+					int taskId = (int) TaskDatabase.getInstance(getApplicationContext()).taskDao().insertWithId(task);
 					Stat stat = new Stat(localDateTime);
 					stat.setId((int)taskId);
 					statViewModel.insert(stat);
 					
-					createNotificationChannel(task);
 					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-					intent.putExtra("id",id);
+					intent.putExtra("id",taskId);
 					intent.putExtra("title",task.getTitle());
 					intent.putExtra("desc",task.getDesc());
-					PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 					
-					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-					long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
-					alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					if (!localDateTime.minusHours(1).isBefore(LocalDateTime.now()))
+					{
+						long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
+						alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					}
 					
 					Toast.makeText(MainActivity.this,"task added", Toast.LENGTH_SHORT).show();
 				}
@@ -182,16 +187,17 @@ public class MainActivity extends AppCompatActivity
 					stat.setId(task.getId());
 					statViewModel.update(stat);
 					
-					createNotificationChannel(task);
 					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
 					intent.putExtra("id",task.getId());
 					intent.putExtra("title",task.getTitle());
 					intent.putExtra("desc",task.getDesc());
-					PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+					PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 					
-					AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-					long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
-					alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					if (!localDateTime.minusHours(1).isBefore(LocalDateTime.now()))
+					{
+						long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
+						alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+					}
 					
 					Toast.makeText(MainActivity.this,"task updated", Toast.LENGTH_SHORT).show();
 				}
@@ -240,11 +246,6 @@ public class MainActivity extends AppCompatActivity
 					Task task = rvAdapter.getTask(viewHolder.getAdapterPosition());
 					Stat stat = StatDatabase.getInstance(getApplicationContext()).statDao().getById(task.getId());
 					stat.setEnd(LocalDateTime.now());
-<<<<<<< Updated upstream
-=======
-//					Toast.makeText(getApplicationContext(),task.getDate().toString(), Toast.LENGTH_SHORT).show();
-//					Toast.makeText(getApplicationContext(),LocalDateTime.now().toString(), Toast.LENGTH_SHORT).show();
->>>>>>> Stashed changes
 					taskViewModel.delete(task);
 					statViewModel.update(stat);
 					Toast.makeText(MainActivity.this,"Task deleted",Toast.LENGTH_SHORT).show();
@@ -283,54 +284,14 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	
-//	public void createNotification(Task task)
-//	{
-//		Integer id = task.getId();
-//		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-//		{
-//			NotificationChannel channel = manager.getNotificationChannel(id.toString());
-//			channel = new NotificationChannel(id.toString(),"CN",NotificationManager.IMPORTANCE_HIGH);
-//			channel.setDescription("CD");
-//			channel.enableVibration(true);
-//			channel.setVibrationPattern(new long[]{100,1000,200,340});
-//			channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-//			manager.createNotificationChannel(channel);
-//		}
-//		Intent notificationIntent = new Intent(this, NotificationActivity.class);
-//		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
-//		NotificationCompat.Builder builder = new NotificationCompat.Builder(this,id.toString())
-//				.setSmallIcon(R.drawable.logo)
-//				.setContentTitle(task.getTitle())
-//				.setContentText(task.getDesc())
-//				.setPriority(NotificationCompat.PRIORITY_HIGH)
-//				.setVibrate(new long[]{100,1000,200,340})
-//				.setAutoCancel(false)
-//				.setTicker("Notification");
-//		builder.setContentIntent(contentIntent);
-//		NotificationManagerCompat m = NotificationManagerCompat.from(getApplicationContext());
-//		m.notify(id,builder.build());
-//
-//	}
-	
-	private void createNotificationChannel(Task task)
+	private void createNotificationChannel()
 	{
-		Integer id = task.getId();
-		Log.d("createNotificationChannel",id.toString());
-		String title = task.getTitle();
-		String desc = task.getDesc();
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-		{
-			String name = "TaskChannelName";
-			String description = "TaskChannelDescription";
-			int importance = NotificationManager.IMPORTANCE_HIGH;
-			NotificationChannel channel = new NotificationChannel(id.toString(),name,importance);
-			channel.setDescription(description);
-			
-			NotificationManager notificationManager = getSystemService(NotificationManager.class);
-			notificationManager.createNotificationChannel(channel);
-		}
+		int importance = NotificationManager.IMPORTANCE_HIGH;
+		NotificationChannel channel = new NotificationChannel("channelId","channelTitle",importance);
+		channel.setDescription("channelDesc");
+		
+		notificationManager = getSystemService(NotificationManager.class);
+		notificationManager.createNotificationChannel(channel);
 	}
 	
 	public static void hideSystemUI(Activity activity) {

@@ -58,4 +58,10 @@ public class SettingsActivity extends AppCompatActivity
 			}
 		});
 	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		startActivity(new Intent(this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+	}
 }

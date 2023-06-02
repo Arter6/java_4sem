@@ -51,7 +51,6 @@ public class StatisticsActivity extends AppCompatActivity
 		
 		bottomNavigationView = binding.bottomNavigation;
 		bottomNavigationView.setSelectedItemId(R.id.statistics);
-//		bottomNavigationView.getMenu().getItem(1).setChecked(true);
 		
 		bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
 		{
@@ -78,20 +77,21 @@ public class StatisticsActivity extends AppCompatActivity
 		});
 		
 		statViewModel = new ViewModelProvider(this,(ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(StatViewModel.class);
-		List<Stat> statList = StatDatabase.getInstance(getApplicationContext()).statDao().getListData();
-		for (Stat stat : statList)
-		{
-			if (stat.getEnd() != null && stat.getEnd().isBefore(LocalDateTime.now().minusDays(6).plusHours(3)))
-			{
-				statViewModel.delete(stat);
-			}
-		}
 		
 		statViewModel.getAllStats().observe(this, new Observer<List<Stat>>()
 		{
 			@Override
 			public void onChanged(List<Stat> stats)
 			{
+				
+				for (Stat stat : stats)
+				{
+					if (stat.getEnd() != null && stat.getEnd().isBefore(LocalDateTime.now().minusDays(6)))
+					{
+						statViewModel.delete(stat);
+					}
+				}
+				
 				BarChart barChart = binding.StatBar;
 				barChart.getXAxis().setValueFormatter(new BarChartXAxisValueFormatter());
 				
@@ -103,8 +103,8 @@ public class StatisticsActivity extends AppCompatActivity
 				{
 					for (int i=0;i<7;i++)
 					{
-						LocalDateTime dayBefore = LocalDateTime.now().plusHours(3).minusDays(7-i);
-						LocalDateTime dayAfter = LocalDateTime.now().plusHours(3).minusDays(6-i);
+						LocalDateTime dayBefore = LocalDateTime.now().minusDays(7-i);
+						LocalDateTime dayAfter = LocalDateTime.now().minusDays(6-i);
 						if (stat.getEnd() != null && stat.getEnd().isAfter(dayBefore) && stat.getEnd().isBefore(dayAfter) && stat.getEnd().isAfter(stat.getStart()))
 						{
 							yAxis[i]+=1;
@@ -145,6 +145,6 @@ public class StatisticsActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed()
 	{
-		startActivity(new Intent(this,MainActivity.class));
+		startActivity(new Intent(this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
 	}
 }
