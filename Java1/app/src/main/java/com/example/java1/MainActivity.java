@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
-	
-	private AppBarConfiguration appBarConfiguration;
 	private ActivityMainBinding binding;
 	
 	Context context = this;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 		
 		Toast toast = Toast.makeText(context,"onCreate",duration);
 		toast.show();
-		Log.d(TAG,"onCreate");
+		Log.e(TAG,"onCreate");
 	}
 	
 	@Override
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity
 		super.onStart();
 		Toast toast = Toast.makeText(context,"onStart",duration);
 		toast.show();
-		Log.d(TAG,"onStart");
+		Log.w(TAG,"onStart");
 	}
 	
 	@Override
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity
 		super.onStop();
 		Toast toast = Toast.makeText(context,"onStop",duration);
 		toast.show();
-		Log.d(TAG,"onStop");
+		Log.i(TAG,"onStop");
 	}
 	
 	@Override
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 		super.onPause();
 		Toast toast = Toast.makeText(context,"onPause",duration);
 		toast.show();
-		Log.d(TAG,"onPause");
+		Log.v(TAG,"onPause");
 	}
 	
 	@Override
@@ -89,6 +87,6 @@ public class MainActivity extends AppCompatActivity
 		super.onResume();
 		Toast toast = Toast.makeText(context,"onResume",duration);
 		toast.show();
-		Log.d(TAG,"onResume");
+		Log.wtf(TAG,"onResume");
 	}
 }

@@ -5,6 +5,7 @@ import static com.example.coursejava.Activities.MainActivity.hideSystemUI;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -26,9 +27,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -103,9 +106,9 @@ public class StatisticsActivity extends AppCompatActivity
 				{
 					for (int i=0;i<7;i++)
 					{
-						LocalDateTime dayBefore = LocalDateTime.now().minusDays(7-i);
-						LocalDateTime dayAfter = LocalDateTime.now().minusDays(6-i);
-						if (stat.getEnd() != null && stat.getEnd().isAfter(dayBefore) && stat.getEnd().isBefore(dayAfter) && stat.getEnd().isAfter(stat.getStart()))
+						LocalDate dayBefore = LocalDate.now().minusDays(7-i);
+						LocalDate dayAfter = LocalDate.now().minusDays(5-i);
+						if (stat.getEnd() != null && stat.getEnd().toLocalDate().isAfter(dayBefore) && stat.getEnd().toLocalDate().isBefore(dayAfter) && stat.getEnd().isAfter(stat.getStart()))
 						{
 							yAxis[i]+=1;
 							break;
@@ -115,7 +118,7 @@ public class StatisticsActivity extends AppCompatActivity
 				
 				for (int i=0;i<7;i++)
 				{
-					long dayTime = Calendar.getInstance().getTimeInMillis() - (6 - i) * (24 * 3600000) + 3 * 60 * 60 * 1000;
+					long dayTime = Calendar.getInstance().getTimeInMillis() - (6 - i) * (24 * 3600000) + (3 * 60 * 60 * 1000);
 					dayTime = TimeUnit.MILLISECONDS.toDays(dayTime);
 					barEntryArrayList.add(new BarEntry(dayTime,yAxis[i]));
 				}
