@@ -118,7 +118,7 @@ public class StatisticsActivity extends AppCompatActivity
 				
 				for (int i=0;i<7;i++)
 				{
-					long dayTime = Calendar.getInstance().getTimeInMillis() - (6 - i) * (24 * 3600000) + (3 * 60 * 60 * 1000);
+					long dayTime = Calendar.getInstance().getTimeInMillis() - (6 - i) * (24 * 3600000);
 					dayTime = TimeUnit.MILLISECONDS.toDays(dayTime);
 					barEntryArrayList.add(new BarEntry(dayTime,yAxis[i]));
 				}
