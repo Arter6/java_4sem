@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class TaskViewModel extends AndroidViewModel implements LifecycleObserver
+public class TaskViewModel extends AndroidViewModel
 {
 	private TaskRepo taskRepo;
 	private LiveData<List<Task>> tasklist;
