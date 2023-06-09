@@ -23,62 +23,62 @@ public class StatRepo
 		statlist = statDao.getAllData();
 	}
 	
-	public void insertData(Stat stat){new StatRepo.InsertStat(statDao).execute(stat);}
-	public void updateData(Stat stat){new StatRepo.UpdateStat(statDao).execute(stat);}
-	public void deleteData(Stat stat){new StatRepo.DeleteStat(statDao).execute(stat);}
+	public void insertData(Stat stat){new Thread(new InsertStat(statDao,stat)).start();}
+	public void updateData(Stat stat){new Thread(new UpdateStat(statDao,stat)).start();}
+	public void deleteData(Stat stat){new Thread(new DeleteStat(statDao,stat)).start();}
 	public LiveData<List<Stat>> getAllData()
 	{
 		return statlist;
 	}
 	
-	private static class InsertStat extends AsyncTask<Stat,Void,Void>
+	private static class InsertStat implements Runnable
 	{
 		private StatDao statDao;
+		private Stat stat;
 		
-		public InsertStat(StatDao statDao)
+		public InsertStat(StatDao statDao,Stat stat)
 		{
 			this.statDao = statDao;
+			this.stat = stat;
 		}
-		
+
 		@Override
-		protected Void doInBackground(Stat... stats)
-		{
-			statDao.insert(stats[0]);
-			return null;
+		public void run() {
+			statDao.insert(stat);
 		}
 	}
-	
-	private static class DeleteStat extends AsyncTask<Stat,Void,Void>
+
+	private static class UpdateStat implements Runnable
 	{
 		private StatDao statDao;
-		
-		public DeleteStat(StatDao statDao)
+		private Stat stat;
+
+		public UpdateStat(StatDao statDao,Stat stat)
 		{
 			this.statDao = statDao;
+			this.stat = stat;
 		}
-		
+
 		@Override
-		protected Void doInBackground(Stat... stats)
-		{
-			statDao.delete(stats[0]);
-			return null;
+		public void run() {
+			statDao.update(stat);
 		}
 	}
-	
-	private static class UpdateStat extends AsyncTask<Stat,Void,Void>
+
+	private static class DeleteStat implements Runnable
 	{
 		private StatDao statDao;
-		
-		public UpdateStat(StatDao statDao)
+		private Stat stat;
+
+		public DeleteStat(StatDao statDao,Stat stat)
 		{
 			this.statDao = statDao;
+			this.stat = stat;
 		}
-		
+
 		@Override
-		protected Void doInBackground(Stat... stats)
-		{
-			statDao.update(stats[0]);
-			return null;
+		public void run() {
+			statDao.delete(stat);
 		}
 	}
 }

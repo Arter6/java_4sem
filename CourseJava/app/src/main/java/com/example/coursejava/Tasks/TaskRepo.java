@@ -19,62 +19,68 @@ public class TaskRepo
 		tasklist = taskDao.getAllData();
 	}
 	
-	public void insertData(Task task){new InsertTask(taskDao).execute(task);}
-	public void updateData(Task task){new UpdateTask(taskDao).execute(task);}
-	public void deleteData(Task task){new DeleteTask(taskDao).execute(task);}
+	public void insertData(Task task){new Thread(new InsertTask(taskDao,task)).start();}
+	public void updateData(Task task){new Thread(new UpdateTask(taskDao,task)).start();}
+	public void deleteData(Task task){new Thread(new DeleteTask(taskDao,task)).start();}
 	public LiveData<List<Task>> getAllData()
 	{
 		return tasklist;
 	}
 	
-	private static class InsertTask extends AsyncTask<Task,Void,Void>
+	private static class InsertTask implements Runnable
 	{
 		private TaskDao taskDao;
+		private Task task;
 		
-		public InsertTask(TaskDao taskDao)
+		public InsertTask(TaskDao taskDao,Task task)
 		{
 			this.taskDao = taskDao;
+			this.task = task;
 		}
-		
+
+
 		@Override
-		protected Void doInBackground(Task... tasks)
+		public void run()
 		{
-			taskDao.insert(tasks[0]);
-			return null;
+			taskDao.insert(task);
 		}
 	}
-	
-	private static class DeleteTask extends AsyncTask<Task,Void,Void>
+
+	private static class UpdateTask implements Runnable
 	{
 		private TaskDao taskDao;
-		
-		public DeleteTask(TaskDao taskDao)
+		private Task task;
+
+		public UpdateTask(TaskDao taskDao,Task task)
 		{
 			this.taskDao = taskDao;
+			this.task = task;
 		}
-		
+
+
 		@Override
-		protected Void doInBackground(Task... tasks)
+		public void run()
 		{
-			taskDao.delete(tasks[0]);
-			return null;
+			taskDao.update(task);
 		}
 	}
-	
-	private static class UpdateTask extends AsyncTask<Task,Void,Void>
+
+	private static class DeleteTask implements Runnable
 	{
 		private TaskDao taskDao;
-		
-		public UpdateTask(TaskDao taskDao)
+		private Task task;
+
+		public DeleteTask(TaskDao taskDao,Task task)
 		{
 			this.taskDao = taskDao;
+			this.task = task;
 		}
-		
+
+
 		@Override
-		protected Void doInBackground(Task... tasks)
+		public void run()
 		{
-			taskDao.update(tasks[0]);
-			return null;
+			taskDao.delete(task);
 		}
 	}
 }
