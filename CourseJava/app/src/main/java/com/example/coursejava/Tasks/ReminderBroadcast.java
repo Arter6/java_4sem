@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -24,6 +25,8 @@ public class ReminderBroadcast extends BroadcastReceiver
 			Integer id = intent.getIntExtra("id", 0);
 			String title = intent.getStringExtra("title");
 			String desc = intent.getStringExtra("desc");
+			Log.d("onReceive",title);
+			Log.d("onReceive",desc);
 			Intent notificationIntent = new Intent(context, MainActivity.class);
 			notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			

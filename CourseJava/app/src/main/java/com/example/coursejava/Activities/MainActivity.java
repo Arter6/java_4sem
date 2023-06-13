@@ -158,14 +158,13 @@ public class MainActivity extends AppCompatActivity
 					stat.setId((int)taskId);
 					statViewModel.insert(stat);
 					
-					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-					intent.putExtra("id",taskId);
-					intent.putExtra("title",task.getTitle());
-					intent.putExtra("desc",task.getDesc());
-					PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-					
 					if (!localDateTime.minusHours(1).isBefore(LocalDateTime.now()))
 					{
+						Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+						intent.putExtra("id",taskId);
+						intent.putExtra("title",task.getTitle());
+						intent.putExtra("desc",task.getDesc());
+						PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 						long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
 						alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
 					}
@@ -188,14 +187,13 @@ public class MainActivity extends AppCompatActivity
 					stat.setId(task.getId());
 					statViewModel.update(stat);
 					
-					Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-					intent.putExtra("id",task.getId());
-					intent.putExtra("title",task.getTitle());
-					intent.putExtra("desc",task.getDesc());
-					PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-					
 					if (!localDateTime.minusHours(1).isBefore(LocalDateTime.now()))
 					{
+						Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+						intent.putExtra("id",task.getId());
+						intent.putExtra("title",task.getTitle());
+						intent.putExtra("desc",task.getDesc());
+						PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 						long timeAlarm = ZonedDateTime.of(localDateTime.minusHours(1), ZoneId.systemDefault()).toInstant().toEpochMilli();
 						alarmManager.set(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
 					}
